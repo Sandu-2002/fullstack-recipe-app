@@ -2,6 +2,7 @@ import express from 'express';
 import {ENV} from './config/env.js';
 import {db} from './config/db.js';
 import {favoritesTable} from './db/schema.js';
+import { and } from 'drizzle-orm';
 
 const app = express();
 const PORT = ENV.PORT || 5001;
@@ -24,6 +25,26 @@ app.post("/api/favorites", async (req, res) => {
 
     } catch (error) {
         console.log("Error adding favorite", error);
+        res.status(500).json({error: "Something went wrong"});
+    }
+});
+
+app.delete("/api/favorites/:userId/:recipeId", async (req, res) => {
+    try {
+        const {userId, recipeId} = req.params;
+
+        if (!userId || !recipeId) {
+            return res.status(400).json({error: "Missing required parameters"});
+        }
+
+        await db.delete(favoritesTable).where ( and(
+            eq(favoritesTable.userId, userId),
+            eq(favoritesTable.recipeId,parseInt(recipeId))
+        ));
+
+        res.status(200).json({message: "Favorite removed successfully"});
+    } catch (error) {
+        console.log("Error removing favorite", error);
         res.status(500).json({error: "Something went wrong"});
     }
 });
