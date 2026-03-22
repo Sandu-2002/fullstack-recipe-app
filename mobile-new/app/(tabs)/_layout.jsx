@@ -5,7 +5,7 @@ const Tabslayout = () => {
     const{isSignedIn} = useAuth();
     
     if(!isSignedIn){
-        return <Redirect href={"/(auth)/sign-in"}/>;
+        return <Redirect href={"/(auth)/sign-up"}/>;
     }
   return (
     <Stack/>
