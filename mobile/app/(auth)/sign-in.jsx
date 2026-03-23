@@ -1,9 +1,10 @@
-import { View, Text, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
+import { View, Text, Alert, KeyboardAvoidingView, Platform, ScrollView, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import {useSignIn}  from "@clerk/expo"
 import { useRouter } from "expo-router"
 import { authStyles } from '../../assets/styles/auth.styles'
 import { Image } from 'expo-image'
+import { COLORS } from '../../constants/colors'
 
 const SignInScreen = () => {
   const router = useRouter();
@@ -55,8 +56,21 @@ const SignInScreen = () => {
           <Text style={authStyles.title}>Welcome Back!</Text>
 
           {/* FORM CONTAINER*/}
-          <View>
-            
+          <View style={authStyles.formContainer}>
+            {/* email input*/}
+              <View style={authStyles.inputContainer}>
+                <TextInput
+                  style={authStyles.textInput}
+                  placeholderTextColor={COLORS.textLight}
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="Enter your email"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+
+
           </View>
 
 

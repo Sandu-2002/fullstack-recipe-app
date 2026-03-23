@@ -40,10 +40,12 @@ export const authStyles = StyleSheet.create({
     marginBottom: 30,
   },
   formContainer: {
+    width: "90%",
+    alignSelf: "center",
     flex: 1,
   },
   inputContainer: {
-    marginBottom: 20,
+    marginTop: 25,
     position: "relative",
   },
   textInput: {
