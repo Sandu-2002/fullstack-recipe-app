@@ -6,7 +6,7 @@ import { COLORS } from '../constants/colors'
 
 export default function RootLayout() {
   return (
-    <ClerkProvider publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!}
+    <ClerkProvider publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}
   tokenCache={tokenCache}>
     <SafeAreaView style={{ flex: 1, backgroundColor:COLORS.background }} >
 <Slot />
