@@ -17,7 +17,7 @@ export const authStyles = StyleSheet.create({
     paddingTop: 40,
   },
   imageContainer: {
-    height: height * 0.5,
+    height: height * 0.5 - 40,
     marginBottom: 30,
     justifyContent: "center",
     alignItems: "center",
@@ -31,7 +31,7 @@ export const authStyles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.text,
     textAlign: "center",
-    marginTop: -70,
+    marginTop: -60,
   },
   subtitle: {
     fontSize: 16,
