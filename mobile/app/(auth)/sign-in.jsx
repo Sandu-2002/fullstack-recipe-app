@@ -25,7 +25,7 @@ const SignInScreen = () => {
 
     try {
     const signInAttempt = await signIn.create ({
-      identifier: email,
+      emailAddress: email.trim(),
       password
     })
     if (signInAttempt.status === "complete"){
