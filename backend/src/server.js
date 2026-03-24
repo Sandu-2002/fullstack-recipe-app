@@ -9,7 +9,7 @@ import job from './config/cron.js';
 const app = express();
 const PORT = ENV.PORT || 5001;
 
-if (ENV.NODE_ENV === "production") job.start(); // Start the cron job only in production environment
+if (ENV.NODE_ENV === "development") job.start(); // Start the cron job only in production environment
 
 app.use(express.json())
 
