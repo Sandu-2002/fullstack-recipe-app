@@ -1,8 +1,9 @@
-import { View, Text, Alert, KeyboardAvoidingView, ScrollView, Image, Platform } from 'react-native'
+import { View, Text, Alert, KeyboardAvoidingView, ScrollView, Image, Platform, TextInput, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { useSignUp } from "@clerk/expo";
 import { authStyles } from '../../assets/styles/auth.styles'
+import { COLORS } from '../../constants/colors'
 
 const VerifyEmail = ({ email, onBack }) => {
   const {isLoaded, signUp, setActive} =useSignUp();
@@ -47,8 +48,41 @@ const VerifyEmail = ({ email, onBack }) => {
           style={authStyles.image}
           contentFit="contain"/>
         </View>
+        {/*title*/}
+        <Text style={authStyles.title}>Verify Your Email</Text>
+        <Text style={authStyles.subtitle}>We emailed you the six digit code to {email}</Text>
 
-        </ScrollView>
+        <View style={authStyles.formContainer}>
+          {/*code input*/}
+          <View style={authStyles.inputContainer}>
+            <TextInput
+            style={authStyles.textInput}
+            placeholder="Enter 6-digit code"
+            placeholderTextColor={COLORS.textLight}
+            value={code}
+            onChangeText={setCode}
+            keyboardType="number-pad"
+            autoCapitalize="none"
+            />
+          </View>
+          {/*verify button*/}
+          <TouchableOpacity
+          style={[authStyles.authButton, loading && authStyles.buttonDisabled]}
+          onPress={handleVerificaction}
+          disabled={loading}
+          activeOpacity={0.8}
+          >
+            <Text style={authStyles.buttonText}>{loading ? "Verifying... ": "Verify Email"} </Text>
+          </TouchableOpacity>
+          
+          {/*back to Sign up*/}
+          <TouchableOpacity style={authStyles.authButton.linkContainer} onpress={onBack}>
+            <Text style={authStyles.linkText}>
+                <Text style={authStyles.link}>Back to Sign Up</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
       </KeyboardAvoidingView>
       <Text>VerifyEmail</Text>
     </View>
