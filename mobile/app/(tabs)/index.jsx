@@ -9,6 +9,8 @@ import { Ionicons } from '@expo/vector-icons'
 import CategoryFilter from '../../components/CategoryFilter'
 import RecipeCard from '../../components/RecipeCard'
 
+const sleep = (ms) => Promise (resolve=> setTimeout(resolve, ms));
+
 const HomeScreen = () => {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -36,6 +38,8 @@ const HomeScreen = () => {
       }));
 
       setCategories(transformedCategories);
+
+      if(!selectedCategory) setSelectedCategory(transformedCategories[0].name);
 
       const transformedMeals = randomMeals
         .map((meal) => MealAPI.transformMealData(meal))
@@ -74,7 +78,9 @@ const HomeScreen = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
+    //await sleep (2000);
     await loadData();
+    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -89,6 +95,7 @@ const HomeScreen = () => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
+            tintColor={COLORS.primary}
           />
         }
         contentContainerStyle={homeStyles.scrollContent}
@@ -193,6 +200,7 @@ const HomeScreen = () => {
                 columnWrapperStyle={homeStyles.row}
                 contentContainerStyle={homeStyles.recipesGrid}
                 scrollEnabled={false}
+                //ListEmptyComponents={}
                 />
               ):(
                 <View style={homeStyles.emptyState}>
