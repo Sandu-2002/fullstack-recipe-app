@@ -13,9 +13,9 @@ const SearchScreen = () => {
   const [loading,  setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
 
-  const debouncedSearchQuery =  useDebounce (searchQuery, 300)
+  const debouncedSearchQuery =  useDebounce (searchQuery, 300);
 
-  const performSearch = async (query = '') =>{
+  const performSearch = async (query='') =>{
     if (!query.trim()){
       const randomMeals  = await MealAPI.getRandomMeals(12)
       return randomMeals.map (meal => MealAPI.transformMealData(meal))
@@ -30,8 +30,11 @@ const SearchScreen = () => {
       results = ingredientResults
     }
 
-    return results.slice(0,12).map(meal =>  MealAPI.transformMealData(meal)).MealAPIfilter(meal => meal !== null);
-  };
+   return results
+        .slice(0, 12)
+        .map((meal) => MealAPI.transformMealData(meal))
+        .filter((meal) => meal !== null);
+    };
 
   useEffect(() => {
     const loadInitialData = async  () => {
