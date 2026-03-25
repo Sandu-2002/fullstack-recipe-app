@@ -1,6 +1,6 @@
 import { View, Text, Alert, KeyboardAvoidingView, Platform, ScrollView, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import {useSignIn}  from "@clerk/expo"
+import {useSignIn}  from "@clerk/expo/legacy"
 import { useRouter } from "expo-router"
 import { authStyles } from '../../assets/styles/auth.styles'
 import { Image } from 'expo-image'
@@ -25,7 +25,7 @@ const SignInScreen = () => {
 
     try {
     const signInAttempt = await signIn.create ({
-      emailAddress: email.trim(),
+      identifier: email.trim(),
       password
     })
     if (signInAttempt.status === "complete"){
@@ -36,7 +36,7 @@ const SignInScreen = () => {
       console.error(JSON.stringify(signInAttempt, null, 2));
     }
     }catch (err){
-      Alert.alert("Erroe", err.errors?.[0]?.message || "Sign in failed. Please try again.");
+      Alert.alert("Error", err.errors?.[0]?.message || "Sign in failed. Please try again.");
       console.error (JSON.stringify(err, null, 2));
 
     } finally {
@@ -53,7 +53,7 @@ const SignInScreen = () => {
           <View style={authStyles.imageContainer}>
             <Image source={require("../../assets/images/i1.png")} 
             style={authStyles.image}
-            contentfit = "contain" />
+            contentFit = "contain" />
           </View>
           <Text style={authStyles.title}>Welcome Back!</Text>
 
@@ -83,9 +83,11 @@ const SignInScreen = () => {
                   autoCapitalize="none"
                 />
                 <TouchableOpacity style={authStyles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
-                  <Ionicons name={showPassword ? "eye-outline" : "eye-off-outline"} size={24} color={COLORS.textLight} />
+                  <Ionicons name={showPassword ? "eye-outline" : "eye-off-outline"} size={20} color={COLORS.textLight} />
                 </TouchableOpacity>
               </View>
+              {/*sign in button*/}
+
               <TouchableOpacity style={[authStyles.authButton, loading && authStyles.buttonDisabled]} 
               onPress={handleSignIn} 
               disabled={loading}
