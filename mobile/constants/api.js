@@ -1,0 +1,1 @@
+export const API_URL = "https://fullstack-recipe-app-beta.vercel.app/api"
