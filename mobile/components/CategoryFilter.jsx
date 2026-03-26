@@ -1,32 +1,54 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import React from "react";
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { Image } from "expo-image";
-import { homeStyles } from "../assets/styles/home.styles";
+import { COLORS } from "../constants/colors";
 
-export default function CategoryFilter({ categories, selectedCategory, onSelectCategory }) {
+const CategoryFilter = ({
+  categories = [],
+  selectedCategory,
+  onSelectCategory,
+}) => {
   return (
-    <View style={homeStyles.categoryFilterContainer}>
+    <View style={styles.container}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={homeStyles.categoryFilterScrollContent}
+        contentContainerStyle={styles.scrollContent}
       >
         {categories.map((category) => {
           const isSelected = selectedCategory === category.name;
+
           return (
             <TouchableOpacity
               key={category.id}
-              style={[homeStyles.categoryButton, isSelected && homeStyles.selectedCategory]}
-              onPress={() => onSelectCategory(category.name)}
-              activeOpacity={0.7}
+              style={[
+                styles.categoryCard,
+                isSelected && styles.selectedCategoryCard,
+              ]}
+              activeOpacity={0.8}
+              onPress={() => onSelectCategory?.(category.name)}
             >
-              <Image
-                source={{ uri: category.image }}
-                style={[homeStyles.categoryImage, isSelected && homeStyles.selectedCategoryImage]}
-                contentFit="cover"
-                transition={300}
-              />
+              <View
+                style={[
+                  styles.imageWrapper,
+                  isSelected && styles.selectedImageWrapper,
+                ]}
+              >
+                <Image
+                  source={{ uri: category.image }}
+                  style={styles.categoryImage}
+                  contentFit="cover"
+                  transition={300}
+                  cachePolicy="memory-disk"
+                />
+              </View>
+
               <Text
-                style={[homeStyles.categoryText, isSelected && homeStyles.selectedCategoryText]}
+                style={[
+                  styles.categoryText,
+                  isSelected && styles.selectedCategoryText,
+                ]}
+                numberOfLines={1}
               >
                 {category.name}
               </Text>
@@ -36,4 +58,59 @@ export default function CategoryFilter({ categories, selectedCategory, onSelectC
       </ScrollView>
     </View>
   );
-}
+};
+
+export default CategoryFilter;
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 12,
+    marginBottom: 8,
+  },
+  scrollContent: {
+    paddingHorizontal: 16,
+    gap: 12,
+  },
+  categoryCard: {
+    width: 84,
+    minHeight: 96,
+    backgroundColor: "#fff",
+    borderRadius: 18,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#eee",
+  },
+  selectedCategoryCard: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
+  imageWrapper: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    overflow: "hidden",
+    backgroundColor: "#f3f3f3",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  selectedImageWrapper: {
+    backgroundColor: "rgba(255,255,255,0.2)",
+  },
+  categoryImage: {
+    width: "100%",
+    height: "100%",
+  },
+  categoryText: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#444",
+    textAlign: "center",
+  },
+  selectedCategoryText: {
+    color: "#fff",
+  },
+});
